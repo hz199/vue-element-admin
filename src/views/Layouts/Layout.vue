@@ -4,7 +4,7 @@
     <div class="right-content">
       <Header/>
       <main class="main">
-        <slot/>
+        <router-view></router-view>
       </main>
       <Footer/>
     </div>
