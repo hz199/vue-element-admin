@@ -4,7 +4,7 @@
     class="el-menu-vertical"
     @open="handleOpen"
     @close="handleClose"
-    :collapse="isCollapse"
+    :collapse="getSliderCollapse"
     background-color="#515a6e"
     text-color="rgba(255, 255, 255, 0.65)"
     active-text-color="#fff"
@@ -17,6 +17,10 @@
       <el-menu-item index="1-3">
         <i class="el-icon-location"></i>
          <span slot="title">选项3</span>
+      </el-menu-item>
+      <el-menu-item index="1-6">
+        <i class="el-icon-location"></i>
+         <span slot="title">选项6</span>
       </el-menu-item>
     </el-submenu>
     <el-menu-item index="2">
@@ -34,20 +38,25 @@
   </el-menu>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      isCollapse: false,
-    };
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'getSliderCollapse'
+    ])
   },
   methods: {
     handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+      console.log(key, keyPath)
     },
     handleClose(key, keyPath) {
-      console.log(key, keyPath);
+      console.log(key, keyPath)
     },
-  },
+  }
 };
 </script>
 <style lang="less" scoped>

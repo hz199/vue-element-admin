@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <el-button>默认按钮</el-button>
+    <p v-for="item in 100" :key="item">{{item}}</p>
   </div>
 </template>
 

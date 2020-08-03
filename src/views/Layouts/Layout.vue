@@ -9,6 +9,7 @@
       <Footer/>
     </div>
     <!-- <slot/> -->
+    <el-backtop target=".app"></el-backtop>
   </div>
 </template>
 <script>
@@ -39,8 +40,8 @@ export default {
   flex-grow: 1;
   margin: 8px 8px;
   background: #fff;
-  // padding: 2px;
+  padding: 5px;
   border-radius: 4px;
-  box-shadow: 0 0 20px 0px rgba(0,0,0,.2);
+  // box-shadow: 0 0 20px 0px rgba(0,0,0,.2);
 }
 </style>

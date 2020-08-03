@@ -26,6 +26,7 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   Backtop,
+  Icon
 } from 'element-ui'
 
 const components = [
@@ -57,6 +58,7 @@ const components = [
   Breadcrumb,
   BreadcrumbItem,
   Backtop,
+  Icon
 ]
 
 const install = function install (Vue) {

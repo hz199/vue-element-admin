@@ -1,7 +1,6 @@
 <template>
   <footer class="footer">
     vue-element-admin ©{{new Date().getFullYear()}} | <a href="#" target="_blank">XXXX有限公司</a>
-    <!-- {{new Date().getFullYear()}} ©  | <a href="#" target="_blank">XXXX有限公司</a> -->
   </footer>
 </template>
 <style lang="less" scoped>

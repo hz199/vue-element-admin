@@ -1,11 +1,36 @@
 <template>
-  <header class="header">
-    header
+  <header class="header clearfix">
+    <!-- 菜单icon -->
+    <div class="pull-left header-menu-icon">
+      <i :class="getSliderCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'" @click="handleHeaderMenuClick"></i>
+    </div>
+    <!--  面包屑 -->
+    <el-breadcrumb class="breadcrumb-wrapper">
+      <el-breadcrumb-item>首页</el-breadcrumb-item>
+      <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+      <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+      <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+    </el-breadcrumb>
   </header>
 </template>
 <script>
+import { mapMutations, mapGetters } from 'vuex'
+
 export default {
-  name: 'Header'
+  name: 'Header',
+  computed: {
+    ...mapGetters([
+      'getSliderCollapse'
+    ])
+  },
+  methods: {
+    ...mapMutations([
+      'setSliderCollapse'
+    ]),
+    handleHeaderMenuClick () {
+      this.setSliderCollapse()
+    }
+  }
 }
 </script>
 <style lang="less" scoped>
@@ -14,5 +39,17 @@ export default {
   line-height: 64px;
   background: #fff;
   box-shadow: 0 0 20px 0px rgba(0,0,0,.2);
+  // position: fixed;
+  width: 100%;
+}
+.breadcrumb-wrapper {
+  line-height: 64px;
+  float: left;
+}
+.header-menu-icon {
+  cursor: pointer;
+  font-size: 22px;
+  padding: 0 20px;
+  color: #606266;
 }
 </style>
