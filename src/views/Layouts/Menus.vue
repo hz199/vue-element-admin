@@ -68,12 +68,13 @@ export default {
       'setCurrentRouter'
     ]),
     handleSelect (path) {
-      // console.log(path)
-      this.$router.push({
-        path
-      })
+      if (path !== this.getCurrentRouter) {
+        this.$router.push({
+          path
+        })
 
-      this.setCurrentRouter(path)
+        this.setCurrentRouter(path)
+      }
     }
   },
   created () {
@@ -87,6 +88,8 @@ export default {
 }
 .el-menu-vertical {
   min-height: 100vh;
+  position: relative;
+  z-index: 1;
 }
 .el-menu-vertical .el-menu-item.is-active {
   background-color: #2c8be4 !important;

@@ -4,7 +4,9 @@
     <div class="right-content">
       <Header/>
       <main class="main">
-        <router-view></router-view>
+        <transition name="fadeTran">
+          <router-view></router-view>
+        </transition>
       </main>
       <Footer/>
     </div>
@@ -35,6 +37,8 @@ export default {
   display: flex;
   flex-direction: column;
   background: #f0f2f5;
+  position: relative;
+  z-index: 0;
 }
 .main {
   flex-grow: 1;
@@ -43,5 +47,13 @@ export default {
   padding: 5px;
   border-radius: 4px;
   // box-shadow: 0 0 20px 0px rgba(0,0,0,.2);
+}
+
+.fadeTran-enter-active {
+  transition: all 1s;
+}
+.fadeTran-enter {
+  transform: translateX(-30px);
+  opacity: 0;
 }
 </style>

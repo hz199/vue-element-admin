@@ -11,4 +11,14 @@ const router = new VueRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+  if (to.matched.length === 0) {
+    console.log(to)
+    return next(`/404`)
+  } else {
+    console.log(to, 11)
+    return next()
+  }
+})
+
 export default router
