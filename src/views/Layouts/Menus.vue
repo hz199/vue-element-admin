@@ -1,64 +1,91 @@
 <template>
   <el-menu
-    default-active="1-4-1"
+    :default-active="getCurrentRouter"
     class="el-menu-vertical"
     :collapse="getSliderCollapse"
     background-color="#515a6e"
-    text-color="rgba(255, 255, 255, 0.65)"
+    text-color="rgba(255, 255, 255, 0.7)"
+    @select="handleSelect"
     active-text-color="#fff"
   >
     <div class="logo">logo</div>
+    <!-- -->
 
-    <!-- <template v-for="item in routesConfig">
-      item
-    </template> -->
+    <template v-for="route in routesConfig">
+      <template v-if="!route.meta.isHide">
+        <!-- children 只有一个默认是 el-menu-item 否则 存在二级菜单 -->
+        <template v-if="route.children && route.children.length <= 1">
+          <el-menu-item :key="route.children[0].path" :index="route.children[0].path">
+            <i :class="route.children[0].meta.icon"></i>
+            <span slot="title">{{route.children[0].meta.title}}</span>
+          </el-menu-item>
+        </template>
+        <!-- 存在下拉菜单 -->
+        <template v-else>
+          <el-submenu :key="route.path" :index="route.path">
+            <template slot="title">
+              <i :class="route.meta.icon"></i>
+              <span slot="title">{{route.meta.title}}</span>
+            </template>
 
-    <el-submenu index="1">
-      <template slot="title">
-        <i class="el-icon-location"></i>
-        <span slot="title">导航一</span>
+            <template v-if="route.children.length > 1">
+              <template v-for="item in route.children">
+                <el-menu-item :key="route.path + '/' + item.path" :index="route.path + '/' + item.path">
+                  <i :class="item.meta.icon"></i>
+                  <span slot="title">{{item.meta.title}}</span>
+                </el-menu-item>
+              </template> 
+            </template>
+          </el-submenu>
+        </template>
       </template>
-      <el-menu-item index="1-3">
-        <i class="el-icon-location"></i>
-         <span slot="title">选项3</span>
-      </el-menu-item>
-      <el-menu-item index="1-6">
-        <i class="el-icon-location"></i>
-         <span slot="title">选项6</span>
-      </el-menu-item>
-    </el-submenu>
-    <el-menu-item index="2">
-      <i class="el-icon-menu"></i>
-      <span slot="title">导航二</span>
-    </el-menu-item>
+    </template>
   </el-menu>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import { routes } from '@/router/config'
+// import { getItem } from '@/utils/localStorage'
 
 export default {
   data() {
     return {
-      routesConfig: []
+      routesConfig: [
+        {
+          meta: {}
+        }
+      ]
     }
   },
   computed: {
     ...mapGetters([
-      'getSliderCollapse'
+      'getSliderCollapse',
+      'getCurrentRouter'
     ])
   },
   methods: {
+    ...mapMutations([
+      'setCurrentRouter'
+    ]),
+    handleSelect (path) {
+      // console.log(path)
+      this.$router.push({
+        path
+      })
+
+      this.setCurrentRouter(path)
+    }
   },
   created () {
     this.routesConfig = Object.freeze(routes)
-    console.log(routes)
   }
 }
 </script>
 <style lang="less" scoped>
 .el-menu-vertical:not(.el-menu--collapse) {
   width: 200px;
+}
+.el-menu-vertical {
   min-height: 100vh;
 }
 .el-menu-vertical .el-menu-item.is-active {

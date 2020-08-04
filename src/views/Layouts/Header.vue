@@ -11,6 +11,17 @@
       <el-breadcrumb-item>活动列表</el-breadcrumb-item>
       <el-breadcrumb-item>活动详情</el-breadcrumb-item>
     </el-breadcrumb>
+
+    <!-- 右侧导航 -->
+    <div class="right-nav pull-right">
+      <el-dropdown class="dropdown">
+        <el-avatar class="avatar" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"></el-avatar>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>个人信息</el-dropdown-item>
+          <el-dropdown-item>退出</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </div>
   </header>
 </template>
 <script>
@@ -51,5 +62,17 @@ export default {
   font-size: 22px;
   padding: 0 20px;
   color: #606266;
+}
+
+.right-nav {
+  line-height: 64px;
+  padding-right: 20px;
+}
+.avatar {
+  cursor: pointer;
+  vertical-align: middle;
+}
+.dropdown {
+  line-height: 64px;
 }
 </style>

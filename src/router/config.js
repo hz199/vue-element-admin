@@ -2,6 +2,7 @@ import Layout from '@/views/Layouts/Layout'
 
 /**
  * name: 路由的名字，必填，请确保唯一性
+ * title: 菜单名
  * meta 一些自定义字段说明
   meta: {
     title: 'title'      将作为 document.title 使用或者面包屑导航使用
@@ -34,6 +35,9 @@ export const routes = [
   {
     path: '',
     component: Layout,
+    meta: {
+      title: '首页',
+    },
     children: [
       {
         path: '/',
@@ -50,6 +54,10 @@ export const routes = [
   {
     path: '/order',
     component: Layout,
+    meta: {
+      title: '订单管理',
+      icon: 'el-icon-info'
+    },
     children: [
       {
         path: 'order1',
