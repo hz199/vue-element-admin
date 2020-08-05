@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { routes } from './config'
+import $store from '../store'
 
 Vue.use(VueRouter)
 
@@ -11,12 +12,36 @@ const router = new VueRouter({
   routes
 })
 
+const handleBreadcrumb = (to) => {
+  const homeData = {
+    icon: 'el-icon-s-home',
+    title: '首页',
+    url: '/'
+  }
+  let breadcrumbs = []
+  if (to.path === '/') {
+    // eslint-disable-next-line no-unused-vars
+    const { url, ...rest } = homeData
+    breadcrumbs = [rest]
+  } else {
+    breadcrumbs = [homeData, {
+      icon: to.meta.icon,
+      title: to.meta.title,
+      url: to.path
+    }]
+  }
+
+  return breadcrumbs
+}
+
 router.beforeEach((to, from, next) => {
   if (to.matched.length === 0) {
     console.log(to)
     return next(`/404`)
   } else {
-    console.log(to, 11)
+    const breadcrumb = handleBreadcrumb(to)
+    $store.commit('setBreadcrumb', breadcrumb)
+
     return next()
   }
 })

@@ -45,7 +45,7 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 import { routes } from '@/router/config'
-// import { getItem } from '@/utils/localStorage'
+import { getItem } from '@/utils/localStorage'
 
 export default {
   data() {
@@ -79,6 +79,8 @@ export default {
   },
   created () {
     this.routesConfig = Object.freeze(routes)
+    const currentRouter = getItem('currentRouter') || '/'
+    this.setCurrentRouter(currentRouter)
   }
 }
 </script>

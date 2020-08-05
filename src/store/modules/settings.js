@@ -8,12 +8,14 @@ const state = {
   /**
    * 当前路由地址
    */
-  currentRouter: '/'
+  currentRouter: '/',
+  breadcrumbList: []
 }
 
 const getters = {
   getSliderCollapse: state => state.sliderCollapse,
-  getCurrentRouter: state => state.currentRouter
+  getCurrentRouter: state => state.currentRouter,
+  getBreadcrumb: state => state.breadcrumbList
 }
 
 const mutations = {
@@ -23,6 +25,9 @@ const mutations = {
   setCurrentRouter (state, path) {
     setItem('currentRouter', path)
     state.currentRouter = path
+  },
+  setBreadcrumb (state, breadcrumb) {
+    state.breadcrumbList = breadcrumb
   }
 }
 
