@@ -8,18 +8,18 @@
         <!-- 滑块 body start -->
         <div class="navs__scroll-view" ref="tagView">
           <transition-group name="tag-list" tag="div" class="navs__scroll-body">
-            <el-tag
-              class="navs__tag"
-              v-for="tag in 40"
-              :key="tag"
-              effect="Plain"
-              closable>
-              {{tag}}
-            </el-tag>
+            <Tag
+              v-for="tag in tags"
+              :key="tag.name"
+              :type="tag.type"
+              :text="tag.name"
+              closable
+              :routerPath="`${tag.name}`"
+              :onClose="handleTagClose"
+              :onTap="handleOnTap"
+            ></Tag>
           </transition-group>
         </div>
-        <!-- <div class="navs__prev"><Icon type="arrow-left-b"></Icon></div>
-        <div class="navs__next"><Icon type="arrow-right-b"></Icon></div> -->
         <!-- 滑块 body end -->
       </el-col>
       <el-col :span="2" class="navs__tag-wrapper">
@@ -39,25 +39,34 @@
 </template>
 <script>
 // import { mapGetters, mapMutations } from 'vuex'
+import Tag from './Tag'
+
+const tags = [...Array(40)].map((k, i) => i).map(item => ({
+  name: '标签' + item,
+  type: item === 36 ? 'primary' : 'default'
+}))
 
 export default {
   name: 'Navs',
+  components: {
+    Tag
+  },
   data () {
     return {
-      tags: [
-        { name: '标签一', type: '' },
-        { name: '标签二', type: 'success' },
-        { name: '标签三', type: 'info' },
-        { name: '标签四', type: 'warning' },
-        { name: '标签五', type: 'danger' }
-      ]
+      tags: tags
     }
   },
   computed: {
   },
   methods: {
     closeAllTag () {},
-    closeOthersTag () {}
+    closeOthersTag () {},
+    handleTagClose (routerPath, type) {
+      console.log(routerPath, type, 11)
+    },
+    handleOnTap (routerPath, type) {
+      console.log(routerPath, type, 22)
+    }
   },
   mounted () {
   },
