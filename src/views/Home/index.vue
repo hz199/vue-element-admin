@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <el-button>默认按钮</el-button>
-    <p v-for="item in 5" :key="item">{{item}}</p>
+    <p v-for="item in 500" :key="item">{{item}}</p>
   </div>
 </template>
 

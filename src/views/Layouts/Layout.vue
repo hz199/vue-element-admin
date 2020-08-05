@@ -3,6 +3,7 @@
     <Menus/>
     <div class="right-content">
       <Header/>
+      <Navs/>
       <main class="main">
         <transition name="fadeTran">
           <router-view></router-view>
@@ -18,13 +19,15 @@
 import Menus from './Menus'
 import Header from './Header'
 import Footer from './Footer'
+import Navs from './Navs/index.vue'
 
 export default {
   name: 'Layout',
   components: {
     Menus,
     Header,
-    Footer
+    Footer,
+    Navs
   }
 }
 </script>
@@ -39,6 +42,7 @@ export default {
   background: #f0f2f5;
   position: relative;
   z-index: 0;
+  width: 0px;
 }
 .main {
   flex-grow: 1;
