@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import NProgress from 'nprogress' // Progress 进度条
+import 'nprogress/nprogress.css'// Progress 进度条样式
 import { routes } from './config'
 import $store from '../store'
 
@@ -34,9 +36,12 @@ const handleBreadcrumb = (to) => {
   return breadcrumbs
 }
 
+// 导航拦截
 router.beforeEach((to, from, next) => {
+  NProgress.start()
   if (to.matched.length === 0) {
     console.log(to)
+    NProgress.done()
     return next(`/404`)
   } else {
     // 面包屑导航
@@ -51,6 +56,7 @@ router.beforeEach((to, from, next) => {
       $store.dispatch('setStoreTagpage')
     }, 100)
 
+    NProgress.done()
     return next()
   }
 })
