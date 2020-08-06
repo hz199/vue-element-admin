@@ -39,8 +39,17 @@ router.beforeEach((to, from, next) => {
     console.log(to)
     return next(`/404`)
   } else {
+    // 面包屑导航
     const breadcrumb = handleBreadcrumb(to)
     $store.commit('setBreadcrumb', breadcrumb)
+
+    // 设置tagpage
+    if (to.meta.isNavActive) {
+      $store.commit('setTagPage', to)
+    }
+    setTimeout(() => {
+      $store.dispatch('setStoreTagpage')
+    }, 100)
 
     return next()
   }

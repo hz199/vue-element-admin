@@ -24,7 +24,8 @@ export default {
     onClose: {
       type: Function,
       default: () => {},
-    }
+    },
+    tagItem: Object
   },
   render() {
     return (
@@ -35,14 +36,14 @@ export default {
         }}
       >
         <span
-          class={`tag__dot tag__dot--${this.type}`}
+          class={`tag__dot tag__dot--${this.type || 'default'}`}
         ></span>
         <span class="tag__text">{this.text}</span>
         <span class="tag__close-wrapper">
           {this.closable ? <i onClick={(e) => {
             e.stopPropagation()
             // e.preventDefault()
-            this.onClose && this.onClose(this.routerPath, this.type)
+            this.onClose && this.onClose(this.tagItem)
           }} class="el-icon-close"></i> : null}
         </span>
       </div>

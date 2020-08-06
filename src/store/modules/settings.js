@@ -1,5 +1,7 @@
 import { setItem } from '@/utils/localStorage'
 
+export const CURRENT_PATH = 'currentPath'
+
 const state = {
   /**
    * 侧边栏导航是否展开状态
@@ -23,7 +25,7 @@ const mutations = {
     state.sliderCollapse = !state.sliderCollapse
   },
   setCurrentRouter (state, path) {
-    setItem('currentRouter', path)
+    setItem(CURRENT_PATH, path)
     state.currentRouter = path
   },
   setBreadcrumb (state, breadcrumb) {

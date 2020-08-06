@@ -1,5 +1,12 @@
 <style lang='less'>
   @import './index.less';
+  // .tag-list-enter, .tag-list-leave-to {
+  //   opacity: 0;
+  //   transform: translateY(30px);
+  // }
+  // .tag-list-enter-active {
+  //   transition: all 0.5s;
+  // }
 </style>
 <template>
   <div class="navs">
@@ -7,18 +14,23 @@
       <el-col ref="navsCol" :span="22" class="navs__col-22">
         <!-- 滑块 body start -->
         <div class="navs__scroll-view" ref="tagView">
-          <transition-group name="tag-list" tag="div" class="navs__scroll-body">
-            <Tag
-              v-for="tag in tags"
-              :key="tag.name"
-              :type="tag.type"
-              :text="tag.name"
-              closable
-              :routerPath="`${tag.name}`"
-              :onClose="handleTagClose"
-              :onTap="handleOnTap"
-            ></Tag>
-          </transition-group>
+          <el-scrollbar native>
+            <div name="tag-list" tag="div" class="navs__scroll-body">
+              <Tag
+                class=""
+                v-for="tag in getTagPages"
+                :key="tag.path"
+                :type="tag.type"
+                :text="tag.title"
+                :tagItem="tag"
+                :ref="tag.type === 'primary' ? 'primary' : null"
+                :closable="!tag.flag"
+                :routerPath="tag.path"
+                :onClose="handleTagClose"
+                :onTap="handleOnTap"
+              ></Tag>
+            </div>
+          </el-scrollbar>
         </div>
         <!-- 滑块 body end -->
       </el-col>
@@ -38,7 +50,7 @@
   </div>
 </template>
 <script>
-// import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import Tag from './Tag'
 
 const tags = [...Array(40)].map((k, i) => i).map(item => ({
@@ -57,20 +69,72 @@ export default {
     }
   },
   computed: {
+    ...mapGetters([
+      'getTagPages',
+      'getTagPath',
+      'getCurrentRouter'
+    ])
   },
   methods: {
-    closeAllTag () {},
-    closeOthersTag () {},
-    handleTagClose (routerPath, type) {
-      console.log(routerPath, type, 11)
+    ...mapMutations([
+      'deleteOneTag',
+      'deleteAllTag',
+      'deleteOthersTag',
+      'setCurrentRouter'
+    ]),
+    moveTag () {
+      const primaryDom = this.$refs.primary[0].$el
+
+      primaryDom && primaryDom.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "nearest"
+      })
     },
-    handleOnTap (routerPath, type) {
-      console.log(routerPath, type, 22)
+    closeAllTag () {
+      this.deleteAllTag()
+      if (this.getCurrentRouter !== '/') {
+        this.$router.push({
+          path: '/'
+        })
+      }
+    },
+    closeOthersTag () {
+      this.deleteOthersTag()
+    },
+    handleTagClose (item) {
+      const index = this.getTagPath.indexOf(item.path)
+      if (item.ref === 'currentTagPage') {
+        const path = this.getTagPath[index - 1]
+        this.$router.push({
+          path: this.getTagPath[index - 1]
+        })
+
+        this.setCurrentRouter(path)
+      }
+      const payload = {
+        index,
+        ref: item.ref
+      }
+
+      this.deleteOneTag(payload)
+    },
+    handleOnTap (routerPath) {
+      if (this.getCurrentRouter !== routerPath) {
+        this.$router.push({
+          path: routerPath
+        })
+
+        this.setCurrentRouter(routerPath)
+      }
     }
   },
-  mounted () {
-  },
   watch: {
+    getTagPages () {
+      this.$nextTick(() => {
+        this.moveTag()
+      })
+    }
   }
 }
 </script>

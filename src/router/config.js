@@ -45,7 +45,8 @@ export const routes = [
         component: () => import('@/views/Home'),
         meta: {
           title: '首页',
-          icon: 'el-icon-s-home'
+          icon: 'el-icon-s-home',
+          isNavActive: true
         }
       }
     ]
@@ -65,7 +66,8 @@ export const routes = [
         component: () => import('@/views/orders/Order1'),
         meta: {
           title: '订单1',
-          icon: 'el-icon-s-order'
+          icon: 'el-icon-s-order',
+          isNavActive: true
         }
       },
       {
@@ -74,7 +76,39 @@ export const routes = [
         component: () => import('@/views/orders/Order2'),
         meta: {
           title: '订单2',
-          icon: 'el-icon-s-order'
+          icon: 'el-icon-s-order',
+          isNavActive: true
+        }
+      }
+    ]
+  },
+  // testPage
+  {
+    path: '/test',
+    component: Layout,
+    meta: {
+      title: '测试页面',
+      icon: 'el-icon-info'
+    },
+    children: [
+      {
+        path: 'test1',
+        name: 'Test1',
+        component: () => import('@/views/testPage/Test1'),
+        meta: {
+          title: '测试页面1',
+          icon: 'el-icon-s-order',
+          isNavActive: true
+        }
+      },
+      {
+        path: 'test2',
+        name: 'Test2',
+        component: () => import('@/views/testPage/Test2'),
+        meta: {
+          title: '测试页面2',
+          icon: 'el-icon-s-order',
+          isNavActive: true
         }
       }
     ]
