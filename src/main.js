@@ -4,8 +4,10 @@ import router from './router'
 import store from './store'
 
 import ElementUi from './components/element'
+import Compenents from './components'
 
 Vue.use(ElementUi)
+Vue.use(Compenents)
 Vue.config.productionTip = false
 
 new Vue({

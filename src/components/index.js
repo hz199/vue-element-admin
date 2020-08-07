@@ -1,4 +1,7 @@
+import Tables from './Tables'
+
 const components = [
+  Tables
 ]
 
 const install = function install (Vue) {

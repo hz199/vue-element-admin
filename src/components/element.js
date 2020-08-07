@@ -32,7 +32,8 @@ import {
   DropdownItem,
   DropdownMenu,
   Tag,
-  Scrollbar
+  Scrollbar,
+  Pagination
 } from 'element-ui'
 
 const components = [
@@ -70,7 +71,8 @@ const components = [
   DropdownItem,
   DropdownMenu,
   Tag,
-  Scrollbar
+  Scrollbar,
+  Pagination
 ]
 
 const install = function install (Vue) {
