@@ -1,12 +1,16 @@
 <style lang='less'>
   @import './index.less';
-  // .tag-list-enter, .tag-list-leave-to {
-  //   opacity: 0;
-  //   transform: translateY(30px);
-  // }
-  // .tag-list-enter-active {
-  //   transition: all 0.5s;
-  // }
+  .tag-list-enter {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  .tag-list-leave-to {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  .tag-list-enter-active, .tag-list-leave-active {
+    transition: all 0.5s;
+  }
 </style>
 <template>
   <div class="navs">
@@ -15,7 +19,11 @@
         <!-- 滑块 body start -->
         <div class="navs__scroll-view" ref="tagView">
           <el-scrollbar native>
-            <div name="tag-list" tag="div" class="navs__scroll-body">
+            <transition-group 
+              @after-leave="handleAfterLeave"
+              @after-enter="handleAfterEnter"
+              name="tag-list" tag="div"
+              class="navs__scroll-body">
               <Tag
                 class=""
                 v-for="tag in getTagPages"
@@ -29,7 +37,7 @@
                 :onClose="handleTagClose"
                 :onTap="handleOnTap"
               ></Tag>
-            </div>
+            </transition-group>
           </el-scrollbar>
         </div>
         <!-- 滑块 body end -->
@@ -127,14 +135,17 @@ export default {
 
         this.setCurrentRouter(routerPath)
       }
-    }
-  },
-  watch: {
-    getTagPages () {
+    },
+    handleAfterLeave () {
+      this.$nextTick(() => {
+        this.moveTag()
+      })
+    },
+    handleAfterEnter () {
       this.$nextTick(() => {
         this.moveTag()
       })
     }
-  }
+  },
 }
 </script>
