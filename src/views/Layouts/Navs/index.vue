@@ -20,8 +20,8 @@
         <div class="navs__scroll-view" ref="tagView">
           <el-scrollbar native>
             <transition-group 
-              @after-leave="handleAfterLeave"
-              @after-enter="handleAfterEnter"
+              @after-leave="handleAfterEnterOrleave"
+              @after-enter="handleAfterEnterOrleave"
               name="tag-list" tag="div"
               class="navs__scroll-body">
               <Tag
@@ -136,12 +136,7 @@ export default {
         this.setCurrentRouter(routerPath)
       }
     },
-    handleAfterLeave () {
-      this.$nextTick(() => {
-        this.moveTag()
-      })
-    },
-    handleAfterEnter () {
+    handleAfterEnterOrleave () {
       this.$nextTick(() => {
         this.moveTag()
       })
