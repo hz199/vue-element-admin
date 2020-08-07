@@ -1,80 +1,59 @@
 <template>
   <div class="Order1">
     <Tables
-      :dataSources="dataSources"
+      :dataSources="tableSources.list"
+      :pageOptions="tableSources.pages"
+      @on-pages="handleTablePages"
     >
       <el-table-column
-        prop="date"
-        label="日期">
+        prop="nameCN"
+        width="150"
+        label="名字">
       </el-table-column>
       <el-table-column
-        prop="name"
-        label="姓名">
-      </el-table-column>
-      <el-table-column
-        prop="address"
+        prop="county"
         label="地址">
+      </el-table-column>
+      <el-table-column
+        prop="nameEN"
+        label="英文名">
+      </el-table-column>
+      <el-table-column
+        prop="timer"
+        label="时间">
       </el-table-column>
     </Tables>
   </div>
 </template>
 <script>
+import * as orderServices from '@/services/order'
+
 export default {
   name: 'Order1',
   data () {
     return {
-      dataSources: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        },{
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }
-      ]
+      tableSources: {
+        list: [],
+        pages: {}
+      }
     }
+  },
+  methods: {
+    fetchTableData (pages = {}) {
+      const payload = Object.assign({}, pages)
+      orderServices.orderTableList(payload).then(res => {
+        if (res.code === 0) {
+          this.tableSources = res.data
+        }
+      })
+    },
+    handleTablePages (pages) {
+      // console.log(pages)
+      this.fetchTableData(pages)
+    }
+  },
+  mounted () {
+    this.fetchTableData()
   }
 }
 </script>

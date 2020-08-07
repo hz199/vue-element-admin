@@ -42,12 +42,22 @@ export default {
       })
     }
   },
+  data () {
+    return {
+      pagesData: {
+        currentPage: 1,
+        pageSize: 10,
+      }
+    }
+  },
   methods: {
     handleSizeChange (val) {
-      console.log(`每页 ${val} 条`)
+      this.pagesData.pageSize = val
+      this.$emit('on-pages', JSON.parse(JSON.stringify(this.pagesData)))
     },
     handleCurrentChange (val) {
-      console.log(`当前页: ${val}`)
+      this.pagesData.currentPage = val
+      this.$emit('on-pages', JSON.parse(JSON.stringify(this.pagesData)))
     }
   }
 }
@@ -60,6 +70,7 @@ export default {
 <style lang="less">
 .tables .el-table__header tr > th {
   background-color: #f8f8f9;
+  font-weight: bold;
 }
 .tables .el-pagination.is-background .btn-next,
 .tables .el-pagination.is-background .btn-prev,
