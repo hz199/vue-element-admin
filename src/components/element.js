@@ -14,6 +14,7 @@ import {
   Button,
   ButtonGroup,
   Message,
+  MessageBox,
   Col,
   Row,
   Table,
@@ -33,7 +34,8 @@ import {
   DropdownMenu,
   Tag,
   Scrollbar,
-  Pagination
+  Pagination,
+  Loading
 } from 'element-ui'
 
 const components = [
@@ -51,7 +53,8 @@ const components = [
   OptionGroup,
   Button,
   ButtonGroup,
-  Message,
+  [Message, '$message'],
+  [MessageBox, '$msgbox'],
   Row,
   Col,
   Table,
@@ -72,14 +75,23 @@ const components = [
   DropdownMenu,
   Tag,
   Scrollbar,
-  Pagination
+  Pagination,
+  [Loading.service, '$loading'],
 ]
 
 const install = function install (Vue) {
   if (install.installed) return
+  // loading自定义指令
+  Vue.use(Loading.directive)
 
   components.forEach((component) => {
-    Vue.component(component.name, component)
+    if (component instanceof Array) {
+      const [Comp, $compName] = component
+      Vue.prototype[$compName] = Comp
+      Vue.component(Comp.name, Comp)
+    } else {
+      Vue.component(component.name, component)
+    }
   })
 }
 

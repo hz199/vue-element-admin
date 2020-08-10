@@ -4,6 +4,7 @@
       :dataSources="tableSources.list"
       :pageOptions="tableSources.pages"
       @on-pages="handleTablePages"
+      :loading="tableLoading"
     >
       <el-table-column
         prop="nameCN"
@@ -35,16 +36,19 @@ export default {
       tableSources: {
         list: [],
         pages: {}
-      }
+      },
+      tableLoading: false
     }
   },
   methods: {
     fetchTableData (pages = {}) {
+      this.tableLoading = true
       const payload = Object.assign({}, pages)
       orderServices.orderTableList(payload).then(res => {
         if (res.code === 0) {
           this.tableSources = res.data
         }
+        this.tableLoading = false
       })
     },
     handleTablePages (pages) {

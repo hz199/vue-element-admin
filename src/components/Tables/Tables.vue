@@ -1,6 +1,7 @@
 <template>
   <div class="tables">
     <el-table
+      v-loading="loading"
       :data="dataSources"
       border
       style="width: 100%">
@@ -28,6 +29,10 @@ export default {
     dataSources: {
       type: Array,
       default: () => []
+    },
+    loading: {
+      type: Boolean,
+      default: () => false
     },
     isPage: {
       type: Boolean,
