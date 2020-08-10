@@ -59,11 +59,6 @@
 import { mapGetters, mapMutations } from 'vuex'
 import Tag from './Tag'
 
-const tags = [...Array(40)].map((k, i) => i).map(item => ({
-  name: '标签' + item,
-  type: item === 36 ? 'primary' : 'default'
-}))
-
 export default {
   name: 'Navs',
   components: {
@@ -71,7 +66,6 @@ export default {
   },
   data () {
     return {
-      tags: tags,
       observer: null
     }
   },
