@@ -37,6 +37,7 @@ const mutations = {
   deleteAllTag (state) {
     state.tagPages.splice(1)
     state.tagPages[0].ref = 'currentTagPage'
+    state.tagPages[0].type = 'primary'
     state.tagPath.splice(1)
     setItem('TagPages', JSON.stringify(state.tagPages))
     setItem('TagPath', JSON.stringify(state.tagPath))

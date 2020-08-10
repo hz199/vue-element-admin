@@ -20,8 +20,6 @@
         <div class="navs__scroll-view" ref="tagView">
           <el-scrollbar native>
             <transition-group 
-              @after-leave="handleAfterEnterOrleave"
-              @after-enter="handleAfterEnterOrleave"
               name="tag-list" tag="div"
               class="navs__scroll-body">
               <Tag
@@ -73,7 +71,8 @@ export default {
   },
   data () {
     return {
-      tags: tags
+      tags: tags,
+      observer: null
     }
   },
   computed: {
@@ -90,15 +89,6 @@ export default {
       'deleteOthersTag',
       'setCurrentRouter'
     ]),
-    moveTag () {
-      const primaryDom = this.$refs.primary[0].$el
-
-      primaryDom && primaryDom.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-        inline: "nearest"
-      })
-    },
     closeAllTag () {
       this.deleteAllTag()
       if (this.getCurrentRouter !== '/') {
@@ -136,11 +126,43 @@ export default {
         this.setCurrentRouter(routerPath)
       }
     },
-    handleAfterEnterOrleave () {
+    // 启动dom监听
+    observerEl () {
+      this.observer = new IntersectionObserver(entries => {
+        if (entries[0].intersectionRatio > 0) {
+          // console.log('进入可视区域', entries)
+            // do something
+        } else {
+          // console.log('移出可视区域')
+          setTimeout(() => {
+            const domTarget = entries[0].target
+            domTarget && domTarget.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+              inline: "nearest"
+            })
+          }, 500)
+        }
+    })
+    },
+    moveTag () {
+      this.observer.disconnect()
+      const primaryDom = this.$refs.primary[0].$el
+      this.observer.observe(primaryDom)
+    },
+  },
+  mounted () {
+    this.observerEl()
+  },
+  beforeDestroy () {
+    this.observer.disconnect()
+  },
+  watch: {
+    getTagPages () {
       this.$nextTick(() => {
         this.moveTag()
       })
     }
-  },
+  }
 }
 </script>
