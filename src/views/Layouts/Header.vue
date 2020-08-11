@@ -4,16 +4,19 @@
     <div class="pull-left header-menu-icon">
       <i :class="getSliderCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'" @click="handleHeaderMenuClick"></i>
     </div>
+
     <!--  面包屑 -->
     <el-breadcrumb class="breadcrumb-wrapper">
-      <el-breadcrumb-item 
-        v-for="item in getBreadcrumb"
-        :key="item.path"
-        :to="item.url"
-      >
-        <i :class="item.icon"></i>
-        {{item.title}}
-      </el-breadcrumb-item>
+      <transition-group name="breadcrumb">
+        <el-breadcrumb-item 
+          v-for="item in getBreadcrumb"
+          :key="item.url || '/'"
+          :to="item.url"
+        >
+          <i :class="item.icon"></i>
+          {{item.title}}
+        </el-breadcrumb-item>
+      </transition-group>
     </el-breadcrumb>
 
     <!-- 右侧导航 -->
@@ -38,6 +41,10 @@ export default {
       'getSliderCollapse',
       'getBreadcrumb'
     ])
+  },
+  data () {
+    return {
+    }
   },
   methods: {
     ...mapMutations([
@@ -79,5 +86,16 @@ export default {
 }
 .dropdown {
   line-height: 64px;
+}
+
+.breadcrumb-enter-active,
+.breadcrumb-leave-active {
+  transition: all .5s;
+}
+
+.breadcrumb-enter,
+.breadcrumb-leave {
+  opacity: 0;
+  transform: translateX(20px);
 }
 </style>
