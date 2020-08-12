@@ -26,11 +26,15 @@ const handleBreadcrumb = (to) => {
     const { url, ...rest } = homeData
     breadcrumbs = [rest]
   } else {
-    breadcrumbs = [homeData, {
-      icon: to.meta.icon,
-      title: to.meta.title,
-      url: to.path
-    }]
+    const matchedList = to.matched.map(item => {
+      return {
+        icon: item.meta.icon,
+        title: item.meta.title,
+        url: item.redirect || item.path
+      }
+    })
+
+    breadcrumbs = [homeData, ...matchedList]
   }
 
   return breadcrumbs

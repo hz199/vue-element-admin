@@ -8,10 +8,11 @@
     <!--  面包屑 -->
     <el-breadcrumb class="breadcrumb-wrapper">
       <transition-group name="breadcrumb">
-        <el-breadcrumb-item 
-          v-for="item in getBreadcrumb"
-          :key="item.url || '/'"
-          :to="item.url"
+        <el-breadcrumb-item
+          class="breadcrumb"
+          v-for="(item, index) in getBreadcrumb"
+          :key="item.url + index || '/'"
+          @click.native="handleBreadcrumb(item.url)"
         >
           <i :class="item.icon"></i>
           {{item.title}}
@@ -39,7 +40,8 @@ export default {
   computed: {
     ...mapGetters([
       'getSliderCollapse',
-      'getBreadcrumb'
+      'getBreadcrumb',
+      'getCurrentRouter'
     ])
   },
   data () {
@@ -48,10 +50,20 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'setSliderCollapse'
+      'setSliderCollapse',
+      'setCurrentRouter'
     ]),
     handleHeaderMenuClick () {
       this.setSliderCollapse()
+    },
+    handleBreadcrumb (path) {
+      if (path !== this.getCurrentRouter && !!path) {
+        this.$router.push({
+          path
+        })
+
+        this.setCurrentRouter(path)
+      }
     }
   }
 }
@@ -97,5 +109,8 @@ export default {
 .breadcrumb-leave {
   opacity: 0;
   transform: translateX(20px);
+}
+.breadcrumb {
+  cursor: pointer;
 }
 </style>

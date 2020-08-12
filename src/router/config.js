@@ -35,6 +35,7 @@ export const routes = [
   {
     path: '',
     component: Layout,
+    redirect: '/',
     meta: {
       title: '首页',
     },
@@ -55,6 +56,7 @@ export const routes = [
   {
     path: '/order',
     component: Layout,
+    redirect: '/order/order1',
     meta: {
       title: '订单管理',
       icon: 'el-icon-info'
@@ -86,6 +88,7 @@ export const routes = [
   {
     path: '/test',
     component: Layout,
+    redirect: '/test/test1', // 面包屑导航中间 XX 管理重定向
     meta: {
       title: '测试页面',
       icon: 'el-icon-info'
