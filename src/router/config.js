@@ -33,6 +33,15 @@ export const routes = [
     }
   },
   {
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/Login/Login.vue'),
+    meta: {
+      title: '登录',
+      isHide: true
+    }
+  },
+  {
     path: '',
     component: Layout,
     redirect: '/',

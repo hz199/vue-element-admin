@@ -1,4 +1,6 @@
 import {
+  Form,
+  FormItem,
   Input,
   InputNumber,
   Radio,
@@ -39,6 +41,8 @@ import {
 } from 'element-ui'
 
 const components = [
+  Form,
+  FormItem,
   Input,
   InputNumber,
   Radio,
