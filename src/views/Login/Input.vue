@@ -1,32 +1,44 @@
 <template>
   <div class="form-item">
+    <!-- 头部 icon -->
     <i class="input-icon" :class="iconClass"></i>
     <input
       class="input"
       autocomplete="new-password"
       :type="inputType"
       ref="inputEl"
+      v-bind="$attrs"
+      @input="handleInput"
     />
     <span class="span" :data-placeholder="placeholder"></span>
+    <!-- 密码 -->
     <template v-if="type === 'password'">
       <img v-if="!eyeStatus" class="append-img" @click="handleSwitchShow(true)" src="./images/close_eyes.png" alt="">
       <img v-else class="append-img" @click="handleSwitchShow(false)" src="./images/open-eyes.png" alt="">
+    </template>
+    <!-- 验证码 -->
+    <template v-if="type === 'code'">
+      <el-button :disabled="codeStatus" type="text" @click="handleCode">{{codeText}}</el-button>
     </template>
   </div>
 </template>
 <script>
 const onFocusFunc = function() {
-    this.className = 'focus input'
+  this.className = 'focus input'
+}
+const onBlurFunc = function() {
+  if (this.value === '') {
+    this.className = 'input'
   }
-  const onBlurFunc = function() {
-    if (this.value === '') {
-      this.className = 'input'
-    }
-  }
+}
 
 export default {
   name: 'LoginInput',
   props: {
+    codeFetchFunc: {
+      type: Function,
+      default: () => {}
+    },
     type: {
       type: String,
       default: () => 'text'
@@ -42,20 +54,52 @@ export default {
   },
   data () {
     return {
-      eyeStatus: false
+      eyeStatus: false,
+
+      codeText: '获取验证码',
+      codeStatus: false, // false 为可以点击状态 true 禁用不可点击
+      codeTime: 60 // 倒计时60s
     }
   },
   computed: {
     inputType() {
-      // if (this.eyeStatus) {
-
-      // }
-      return this.type
+      let newType = ''
+      if (this.eyeStatus) {
+        newType = 'text'
+      } else {
+        newType = this.type === 'code' ? 'text' : this.type
+      }
+      return newType
     }
   },
   methods: {
     handleSwitchShow (eyeStatus) {
       this.eyeStatus = eyeStatus
+    },
+    handleInput (event) {
+      this.$emit('input', event.target.value)
+    },
+    handleCode () {
+      if (!this.codeFetchFunc) return console.error('[codeFetchFunc] not is function')
+
+      this.codeFetchFunc().then(() => {
+        this.codeStatus = true
+        this.codeCountDown()
+      })
+    },
+    codeCountDown () {
+      const timer = setInterval(() => {
+        if (this.codeTime <= 0) {
+          clearInterval(timer)
+
+          this.codeTime = 60
+          this.codeText = '获取验证码'
+          this.codeStatus = false
+        } else {
+          this.codeTime -= 1
+          this.codeText = `${this.codeTime}s后重新发送`
+        }
+      }, 1000)
     }
   },
   beforeDestroy () {
