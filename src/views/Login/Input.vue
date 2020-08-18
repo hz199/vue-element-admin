@@ -1,5 +1,5 @@
 <template>
-  <div class="form-item">
+  <div class="login-form-item">
     <!-- 头部 icon -->
     <i class="input-icon" :class="iconClass"></i>
     <input
@@ -9,6 +9,7 @@
       ref="inputEl"
       v-bind="$attrs"
       @input="handleInput"
+      @blur="handleBlur"
     />
     <span class="span" :data-placeholder="placeholder"></span>
     <!-- 密码 -->
@@ -51,6 +52,14 @@ export default {
       type: String,
       default: () => ''
     },
+  },
+  inject: {
+    elForm: {
+      default: ''
+    },
+    elFormItem: {
+      default: ''
+    }
   },
   data () {
     return {
@@ -100,6 +109,10 @@ export default {
           this.codeText = `${this.codeTime}s后重新发送`
         }
       }, 1000)
+    },
+    // 校验数据
+    handleBlur () {
+      this.elForm.validateField(this.elFormItem.prop)
     }
   },
   beforeDestroy () {
@@ -116,7 +129,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.form-item {
+.login-form-item {
   border-bottom: 2px solid #f1f1f1;
   position: relative;
   display: flex;
@@ -179,5 +192,19 @@ export default {
     display: inline-block;
     margin-top: 5px;
   }
+}
+</style>
+<style>
+.el-form-item.is-error .login-form-item .span::before {
+  color: #F56C6C;
+}
+.el-form-item.is-error .login-form-item .input-icon {
+  color: #F56C6C;
+}
+.el-form-item.is-error .login-form-item .span::after {
+  background: #F56C6C;
+}
+.el-form-item.is-error .login-form-item {
+  border-bottom: 2px solid #F56C6C;
 }
 </style>
