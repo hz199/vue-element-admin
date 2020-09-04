@@ -14,10 +14,8 @@ const install = function (Vue, options = {}) {
           let lazyImage = entry.target
           // 在可视区域中
           if (entry.intersectionRatio > 0) { // 相交率，默认是相对于浏览器视窗
-            setTimeout(() => {
-              lazyImage.src = binding.value
-              lazyImageObserver.unobserve(lazyImage)
-            })
+            lazyImage.src = binding.value
+            lazyImageObserver.unobserve(lazyImage)
           } else {// 不在可视区域中
             lazyImage.src = options.placeholder || ''
           }

@@ -136,7 +136,7 @@ export const routes = [
     children: [
       {
         path: 'imageLazy',
-        name: 'Test1',
+        name: 'ImageLazy',
         component: () => import('@/views/comps/imageLazy'),
         meta: {
           title: '图片懒加载',
