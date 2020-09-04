@@ -3,7 +3,7 @@
 # 终止一个错误
 set -e
 # 构建
-npm run build
+yarn build
 
 # 复制CNAME文件
 cp ./CNAME ./dist
@@ -14,7 +14,7 @@ cd dist
 git init
 git add -A
 git commit -m "初始化项目"
-git remote add origin git@github.com:hz199/reactAdmin.io.git
+git remote add origin git@github.com:hz199/vue-admin-element.io.git
 git push -f origin master
 
 cd -

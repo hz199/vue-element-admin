@@ -124,5 +124,36 @@ export const routes = [
         }
       }
     ]
+  },
+  {
+    path: '/comp',
+    component: Layout,
+    redirect: '/comp/imageLazy', // 面包屑导航中间 XX 管理重定向
+    meta: {
+      title: '组件',
+      icon: 'el-icon-info'
+    },
+    children: [
+      {
+        path: 'imageLazy',
+        name: 'Test1',
+        component: () => import('@/views/comps/imageLazy'),
+        meta: {
+          title: '图片懒加载',
+          icon: 'el-icon-s-order',
+          isNavActive: true
+        }
+      },
+      // {
+      //   path: 'test2',
+      //   name: 'Test2',
+      //   component: () => import('@/views/testPage/Test2'),
+      //   meta: {
+      //     title: '测试页面2',
+      //     icon: 'el-icon-s-order',
+      //     isNavActive: true
+      //   }
+      // }
+    ]
   }
 ]
