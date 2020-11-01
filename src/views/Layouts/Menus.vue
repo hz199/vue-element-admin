@@ -15,7 +15,7 @@
       <template v-if="!route.meta.isHide">
         <!-- children 只有一个默认是 el-menu-item 否则 存在二级菜单 -->
         <template v-if="route.children && route.children.length <= 1">
-          <el-menu-item :key="route.children[0].path" :index="route.children[0].path">
+          <el-menu-item :key="route.redirect" :index="route.redirect">
             <i :class="route.children[0].meta.icon"></i>
             <span slot="title">{{route.children[0].meta.title}}</span>
           </el-menu-item>

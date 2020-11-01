@@ -11,8 +11,6 @@
       </main>
       <Footer/>
     </div>
-    <!-- <slot/> -->
-    <el-backtop target=".app"></el-backtop>
   </div>
 </template>
 <script>
