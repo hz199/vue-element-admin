@@ -6,7 +6,7 @@ import axios from 'axios'
 
 const apiBaseURL =
   process.env.NODE_ENV === 'development'
-    ? 'https://www.fastmock.site/mock/d0f2daa2f0f6b981661fc60e0a1c02d8'
+    ? '/'
     : 'https://www.fastmock.site/mock/d0f2daa2f0f6b981661fc60e0a1c02d8'
 
 const instance = axios.create({
