@@ -6,7 +6,7 @@ import Layout from '@/views/Layouts/Layout'
  * meta 一些自定义字段说明
   meta: {
     title: 'title'      将作为 document.title 使用或者面包屑导航使用
-    keepAlive: true     是否缓存本页面，针对 children 一般列表需要缓存，或者编辑页面禁止缓存
+    keepAlive: true     是否缓存本页面，针对 children 一般列表需要缓存，或者编辑页面禁止缓存 暂未实现
     icon: 'icon'        element-ui 内置icon，作为导航 eg: el-icon-s-home
     isNavActive: true      顶部导航是否处理本页面
     isHide: false       是否是侧边栏菜单
