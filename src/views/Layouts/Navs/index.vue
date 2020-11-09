@@ -13,7 +13,7 @@
   }
 </style>
 <template>
-  <div class="navs">
+  <div class="navs" id="navs">
     <el-row>
       <el-col ref="navsCol" :span="22" class="navs__col-22">
         <!-- 滑块 body start -->
@@ -123,19 +123,21 @@ export default {
     // 启动dom监听
     observerEl () {
       this.observer = new IntersectionObserver(entries => {
-        if (entries[0].intersectionRatio > 0) {
-          // console.log('进入可视区域', entries)
-            // do something
-        } else {
-          // console.log('移出可视区域')
-          setTimeout(() => {
-            const domTarget = entries[0].target
-            domTarget && domTarget.scrollIntoView({
-              behavior: "smooth",
-              block: "center",
-              inline: "nearest"
-            })
-          }, 500)
+        if (entries[1].intersectionRatio > 0) {
+          if (entries[0].intersectionRatio > 0) {
+            // console.log('进入可视区域', entries)
+              // do something
+          } else {
+            // console.log('移出可视区域')
+            setTimeout(() => {
+              const domTarget = entries[0].target
+              domTarget && domTarget.scrollIntoView({
+                behavior: "auto",
+                block: "center",
+                inline: "nearest"
+              })
+            }, 100)
+          }
         }
     })
     },
@@ -143,6 +145,7 @@ export default {
       this.observer.disconnect()
       const primaryDom = this.$refs.primary[0].$el
       this.observer.observe(primaryDom)
+      this.observer.observe(document.querySelector('#navs'))
     },
   },
   mounted () {
