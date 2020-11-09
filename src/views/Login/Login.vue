@@ -5,14 +5,14 @@
         后台管理
       </div>
       <el-form :model="formData" status-icon :rules="rulesForm" ref="ruleForm" autocomplete="off">
-        <el-form-item prop="pass">
+        <el-form-item prop="userName">
           <LoginInput
             iconClass="el-icon-user"
             placeholder="用户名"
             v-model="formData.userName"
           ></LoginInput>
         </el-form-item>
-        <el-form-item prop="checkPass">
+        <el-form-item prop="password">
           <LoginInput
             iconClass="el-icon-unlock"
             placeholder="密码"
@@ -20,7 +20,7 @@
             v-model="formData.password"
           ></LoginInput>
         </el-form-item>
-        <el-form-item prop="checkPass">
+        <el-form-item prop="authCode">
           <LoginInput
             iconClass="el-icon-mobile-phone"
             placeholder="验证码"
@@ -50,7 +50,9 @@ export default {
   data () {
     return {
       formData: {},
-      rulesForm: {}
+      rulesForm: {
+        userName: [{ type: 'string', required: true, message: '  ', trigger: 'blur' }]
+      }
     }
   },
   methods: {
